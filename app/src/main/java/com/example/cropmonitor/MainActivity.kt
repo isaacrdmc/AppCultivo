@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -80,6 +82,7 @@ class MainActivity : ComponentActivity() {
                             val mainNavController = rememberNavController()
                             val navBackStackEntry by mainNavController.currentBackStackEntryAsState()
                             val currentRoute = navBackStackEntry?.destination?.route
+                            var reloadKey by remember { mutableStateOf(0) }
 
                             Scaffold(
                                 bottomBar = {
@@ -99,6 +102,7 @@ class MainActivity : ComponentActivity() {
                                 ) {
                                     composable(Screen.Modulos.route) {
                                         ModulosScreen(
+                                            reloadKey = reloadKey,
                                             onModuloClick = { moduloId ->
                                                 mainNavController.navigate("sensores/$moduloId")
                                             },
@@ -115,6 +119,7 @@ class MainActivity : ComponentActivity() {
                                     // Rutas para la guía de cultivos
                                     composable(Screen.Guia.route) {
                                         GuiaScreen(
+                                            reloadKey = reloadKey,
                                             appContainer = appContainer,
                                             onCultivoClick = { cultivoId ->
                                                 mainNavController.navigate("cultivoDetail/$cultivoId")
@@ -144,6 +149,7 @@ class MainActivity : ComponentActivity() {
                                     // Ruta para la pantalla de Favoritos
                                     composable(Screen.Favoritos.route) {
                                         FavoritosScreen(
+                                            reloadKey = reloadKey,
                                             appContainer = appContainer,
                                             onCultivoClick = { cultivoId ->
                                                 mainNavController.navigate("cultivoDetail/$cultivoId")
@@ -159,6 +165,7 @@ class MainActivity : ComponentActivity() {
                                     // Agrega la composable para la lista de recetas
                                     composable(Screen.Recetas.route) {
                                         RecetasScreen(
+                                            reloadKey = reloadKey,
                                             appContainer = appContainer,
                                             onRecetaClick = { recetaId ->
                                                 mainNavController.navigate("recetaDetail/$recetaId")
@@ -188,6 +195,7 @@ class MainActivity : ComponentActivity() {
                                     }
                                     composable(Screen.Ajustes.route) {
                                         AjustesScreen(
+                                            reloadKey = reloadKey,
                                             appContainer = appContainer, // <-- Pasamos el contenedor
                                             onLogoutClick = {
                                                 tokenManager.clearToken()

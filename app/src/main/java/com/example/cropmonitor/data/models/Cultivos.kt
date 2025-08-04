@@ -5,25 +5,25 @@ import com.google.gson.annotations.SerializedName
 
 // Modelo para la lista de cultivos
 data class CultivoListDto(
-    @SerializedName("cultivoID") val cultivoID: Int,
-    @SerializedName("nombre") val nombre: String,
-    @SerializedName("descripcion") val descripcion: String?,
-    @SerializedName("imagenURL") val imagenURL: String?,
-    @SerializedName("esFavorito") val esFavorito: Boolean,
-    @SerializedName("temporadas") val temporadas: List<String>
+    @SerializedName("CultivoID") val cultivoID: Int,
+    @SerializedName("Nombre") val nombre: String,
+    @SerializedName("Descripcion") val descripcion: String?,
+    @SerializedName("ImagenURL") val imagenURL: String?,
+    @SerializedName("EsFavorito") val esFavorito: Boolean,
+    @SerializedName("Temporadas") val temporadas: List<String>
 )
 
 // Modelo para el detalle de un cultivo
 data class CultivoDetailDto(
-    @SerializedName("cultivoID") val cultivoID: Int,
-    @SerializedName("nombre") val nombre: String,
-    @SerializedName("descripcion") val descripcion: String?,
-    @SerializedName("imagenURL") val imagenURL: String?,
-    @SerializedName("requisitosClima") val requisitosClima: String?,
-    @SerializedName("requisitosAgua") val requisitosAgua: String?,
-    @SerializedName("requisitosLuz") val requisitosLuz: String?,
-    @SerializedName("esFavorito") val esFavorito: Boolean,
-    @SerializedName("temporadas") val temporadas: List<String>
+    @SerializedName("CultivoID") val cultivoID: Int,
+    @SerializedName("Nombre") val nombre: String,
+    @SerializedName("Descripcion") val descripcion: String?,
+    @SerializedName("ImagenURL") val imagenURL: String?,
+    @SerializedName("RequisitosClima") val requisitosClima: String?,
+    @SerializedName("RequisitosAgua") val requisitosAgua: String?,
+    @SerializedName("RequisitosLuz") val requisitosLuz: String?,
+    @SerializedName("EsFavorito") val esFavorito: Boolean,
+    @SerializedName("Temporadas") val temporadas: List<String>
 )
 
 // Modelo para la respuesta de la operación de favoritos

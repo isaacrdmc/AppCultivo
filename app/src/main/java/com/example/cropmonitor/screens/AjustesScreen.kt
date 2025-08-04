@@ -35,6 +35,7 @@ import com.example.cropmonitor.viewmodels.PasswordChangeState
 
 @Composable
 fun AjustesScreen(
+    reloadKey: Int,
     appContainer: AppContainer,
     onLogoutClick: () -> Unit
 ) {
@@ -43,6 +44,9 @@ fun AjustesScreen(
         factory = appContainer.modulosViewModelFactory
     )
     val uiState by viewModel.uiState.collectAsState()
+    LaunchedEffect(reloadKey) {
+        viewModel.fetchUserProfile()
+    }
 
     // Estado para manejar el Snackbar
     val snackbarHostState = remember { SnackbarHostState() }

@@ -4,59 +4,59 @@ import com.google.gson.annotations.SerializedName
 
 // Pantalla 1: Lista de Módulos
 data class ModuloListDto(
-    @SerializedName("moduloID") val moduloID: Int,
-    @SerializedName("nombreModulo") val nombreModulo: String,
-    @SerializedName("estado") val estado: String,
-    @SerializedName("diasEnFuncionamiento") val diasEnFuncionamiento: Int,
-    @SerializedName("cantidadCultivosActual") val cantidadCultivosActual: Int,
-    @SerializedName("cantidadCultivosMax") val cantidadCultivosMax: Int
+    @SerializedName("ModuloID") val moduloID: Int,
+    @SerializedName("NombreModulo") val nombreModulo: String,
+    @SerializedName("Estado") val estado: String,
+    @SerializedName("DiasEnFuncionamiento") val diasEnFuncionamiento: Int,
+    @SerializedName("CantidadCultivosActual") val cantidadCultivosActual: Int,
+    @SerializedName("CantidadCultivosMax") val cantidadCultivosMax: Int
 )
 
 // DTO para crear un nuevo módulo
 data class ModuloCreateDto(
-    @SerializedName("nombreModulo") val nombreModulo: String,
-    @SerializedName("estado") val estado: String,
-    @SerializedName("diasEnFuncionamiento") val diasEnFuncionamiento: Int
+    @SerializedName("NombreModulo") val nombreModulo: String,
+    @SerializedName("Estado") val estado: String,
+    @SerializedName("DiasEnFuncionamiento") val diasEnFuncionamiento: Int
 )
 
 // DTO para representar el slot de un medidor (coincide con el back-end)
 data class MedidorSlotDto(
-    @SerializedName("medidorSlotIndex") val medidorSlotIndex: Int,
-    @SerializedName("enUso") val enUso: Boolean,
-    @SerializedName("cultivoID") val cultivoID: Int?,
-    @SerializedName("cultivoNombre") val cultivoNombre: String?,
-    @SerializedName("cultivoImagenURL") val cultivoImagenURL: String?,
-    @SerializedName("sensores") val sensores: List<SensorLecturaDto>
+    @SerializedName("MedidorSlotIndex") val medidorSlotIndex: Int,
+    @SerializedName("EnUso") val enUso: Boolean,
+    @SerializedName("CultivoID") val cultivoID: Int?,
+    @SerializedName("CultivoNombre") val cultivoNombre: String?,
+    @SerializedName("CultivoImagenURL") val cultivoImagenURL: String?,
+    @SerializedName("Sensores") val sensores: List<SensorLecturaDto>
 )
 
 // DTO para la lectura de un sensor dentro de un slot (coincide con el back-end)
 data class SensorLecturaDto(
-    @SerializedName("sensorID") val sensorID: Int,
-    @SerializedName("tipoSensor") val tipoSensor: String,
-    @SerializedName("unidadMedida") val unidadMedida: String,
-    @SerializedName("valorLectura") val valorLectura: Double?,
-    @SerializedName("estadoRiego") val estadoRiego: String?
+    @SerializedName("SensorID") val sensorID: Int,
+    @SerializedName("TipoSensor") val tipoSensor: String,
+    @SerializedName("UnidadMedida") val unidadMedida: String,
+    @SerializedName("ValorLectura") val valorLectura: Double?,
+    @SerializedName("EstadoRiego") val estadoRiego: String?
 )
 
 // Pantalla 3: Detalle de un medidor/sensor
 data class SensorDetailDto(
-    @SerializedName("sensorID") val sensorID: Int,
-    @SerializedName("moduloNombre") val moduloNombre: String,
-    @SerializedName("tipoSensor") val tipoSensor: String,
-    @SerializedName("unidadMedida") val unidadMedida: String,
-    @SerializedName("valorLectura") val valorLectura: Double?,
-    @SerializedName("ultimaLectura") val ultimaLectura: String?,
-    @SerializedName("estadoRiego") val estadoRiego: String?,
-    @SerializedName("esAcuaHidroponico") val esAcuaHidroponico: Boolean,
+    @SerializedName("SensorID") val sensorID: Int,
+    @SerializedName("ModuloNombre") val moduloNombre: String,
+    @SerializedName("TipoSensor") val tipoSensor: String,
+    @SerializedName("UnidadMedida") val unidadMedida: String,
+    @SerializedName("ValorLectura") val valorLectura: Double?,
+    @SerializedName("UltimaLectura") val ultimaLectura: String?,
+    @SerializedName("EstadoRiego") val estadoRiego: String?,
+    @SerializedName("EsAcuaHidroponico") val esAcuaHidroponico: Boolean,
 
     // Detalles del cultivo
-    @SerializedName("cultivoID") val cultivoID: Int?,
-    @SerializedName("cultivoNombre") val cultivoNombre: String?,
-    @SerializedName("cultivoImagenURL") val cultivoImagenURL: String?,
-    @SerializedName("cultivoRequisitosClima") val cultivoRequisitosClima: String?,
-    @SerializedName("cultivoRequisitosAgua") val cultivoRequisitosAgua: String?,
-    @SerializedName("cultivoRequisitosLuz") val cultivoRequisitosLuz: String?,
+    @SerializedName("CultivoID") val cultivoID: Int?,
+    @SerializedName("CultivoNombre") val cultivoNombre: String?,
+    @SerializedName("CultivoImagenURL") val cultivoImagenURL: String?,
+    @SerializedName("CultivoRequisitosClima") val cultivoRequisitosClima: String?,
+    @SerializedName("CultivoRequisitosAgua") val cultivoRequisitosAgua: String?,
+    @SerializedName("CultivoRequisitosLuz") val cultivoRequisitosLuz: String?,
 
     // Tips
-    @SerializedName("tipsParaEstaPlanta") val tipsParaEstaPlanta: List<String>?
+    @SerializedName("TipsParaEstaPlanta") val tipsParaEstaPlanta: List<String>?
 )

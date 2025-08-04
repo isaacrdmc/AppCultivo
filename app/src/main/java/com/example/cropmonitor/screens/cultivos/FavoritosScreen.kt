@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -36,6 +37,7 @@ private const val BASE_URL = "https://10.0.2.2:7016/"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoritosScreen(
+    reloadKey: Int,
     appContainer: AppContainer,
     onCultivoClick: (Int) -> Unit,
     onLogoutClick: () -> Unit
@@ -44,6 +46,9 @@ fun FavoritosScreen(
         factory = appContainer.modulosViewModelFactory
     )
     val uiState by viewModel.uiState.collectAsState()
+    LaunchedEffect(reloadKey) {
+        viewModel.loadFavoriteCultivos()
+    }
 
     Scaffold(
         topBar = {

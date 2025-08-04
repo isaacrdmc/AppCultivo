@@ -2,31 +2,32 @@ import com.google.gson.annotations.SerializedName
 
 // DTO para la petición de login
 data class LoginRequestDto(
-    @SerializedName("correo")
+    @SerializedName("Correo")
     val correo: String,
-    @SerializedName("contrasena")
+    @SerializedName("Contrasena")
     val contrasena: String
 )
 
+
 // DTO para la respuesta de login exitosa
 data class LoginResponseDto(
-    @SerializedName("jwtToken")
+    @SerializedName("JwtToken") // <-- CAMBIO CLAVE AQUÍ: Capitalización de "JwtToken"
     val jwtToken: String,
-    @SerializedName("usuarioID")
+    @SerializedName("UsuarioID") // <-- CAMBIO CLAVE AQUÍ: Capitalización de "UsuarioID"
     val usuarioID: Int,
-    @SerializedName("correo")
+    @SerializedName("Correo") // <-- CAMBIO CLAVE AQUÍ: Capitalización de "Correo"
     val correo: String,
-    @SerializedName("nombre")
+    @SerializedName("Nombre") // <-- CAMBIO CLAVE AQUÍ: Capitalización de "Nombre"
     val nombre: String
 )
 
 // DTO para la petición de REGISTRO
 data class RegisterRequestDto(
-    @SerializedName("nombre")
+    @SerializedName("Nombre")
     val nombre: String,
-    @SerializedName("correo")
+    @SerializedName("Correo")
     val correo: String,
-    @SerializedName("contrasena")
+    @SerializedName("Contrasena")
     val contrasena: String
 )
 

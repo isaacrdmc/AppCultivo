@@ -33,6 +33,7 @@ private const val BASE_URL = "https://10.0.2.2:7016/"
 
 @Composable
 fun GuiaScreen(
+    reloadKey: Int,
     appContainer: AppContainer,
     onCultivoClick: (Int) -> Unit,
     onLogoutClick: () -> Unit
@@ -44,6 +45,10 @@ fun GuiaScreen(
     val isLoading by cultivosViewModel.isLoading.collectAsState()
     val error by cultivosViewModel.error.collectAsState()
     val selectedTemporadaId by cultivosViewModel.selectedTemporadaId.collectAsState()
+
+    LaunchedEffect(reloadKey) {
+        cultivosViewModel.loadCultivos()
+    }
 
     var searchText by remember { mutableStateOf("") }
 

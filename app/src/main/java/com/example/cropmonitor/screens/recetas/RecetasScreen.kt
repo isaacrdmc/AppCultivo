@@ -17,12 +17,16 @@ import com.example.cropmonitor.viewmodels.RecetasViewModel
 
 @Composable
 fun RecetasScreen(
+    reloadKey: Int,
     appContainer: AppContainer,
     onRecetaClick: (Int) -> Unit,
     onLogoutClick: () -> Unit
 ) {
     val viewModel: RecetasViewModel = viewModel(factory = appContainer.recetasViewModelFactory)
     val uiState by viewModel.recetasUiState.collectAsState()
+    LaunchedEffect(reloadKey) {
+        viewModel.loadRecetas()
+    }
 
     Scaffold(
         topBar = {
@@ -43,7 +47,7 @@ fun RecetasScreen(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         items(state.recetas) { receta ->
-                            RecetaCard(receta = receta, onClick = { onRecetaClick(receta.recetaID) })
+                            RecetaCard(receta = receta, onClick = { onRecetaClick(receta.RecetaID) })
                         }
                     }
                 }
@@ -60,9 +64,9 @@ fun RecetaCard(receta: RecetaListDto, onClick: () -> Unit) {
         onClick = onClick
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = receta.nombreReceta, style = MaterialTheme.typography.titleLarge)
+            Text(text = receta.NombreReceta, style = MaterialTheme.typography.titleLarge)
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = receta.descripcionCorta ?: "Sin descripción", style = MaterialTheme.typography.bodyMedium)
+            Text(text = receta.DescripcionCorta ?: "Sin descripción", style = MaterialTheme.typography.bodyMedium)
         }
     }
 }

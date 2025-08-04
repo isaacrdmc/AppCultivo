@@ -19,6 +19,7 @@ import com.example.cropmonitor.viewmodels.ModulosViewModelFactory
 
 @Composable
 fun ModulosScreen(
+    reloadKey: Int,
     onModuloClick: (Int) -> Unit,
     onLogoutClick: () -> Unit,
     appContainer: AppContainer
@@ -27,6 +28,9 @@ fun ModulosScreen(
     val modulos by viewModel.modulos.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val error by viewModel.error.collectAsState()
+    LaunchedEffect(reloadKey) {
+        viewModel.loadModulos()
+    }
 
     Scaffold(
         topBar = {

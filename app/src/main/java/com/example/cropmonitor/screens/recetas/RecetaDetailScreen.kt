@@ -46,21 +46,21 @@ fun RecetaDetailScreen(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         item {
-                            Text(text = receta.nombreReceta, style = MaterialTheme.typography.headlineLarge)
+                            Text(text = receta.NombreReceta, style = MaterialTheme.typography.headlineLarge)
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(text = receta.descripcion ?: "Sin descripción.", style = MaterialTheme.typography.bodyLarge)
+                            Text(text = receta.Descripcion ?: "Sin descripción.", style = MaterialTheme.typography.bodyLarge)
                             Spacer(modifier = Modifier.height(16.dp))
                             Divider()
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(text = "Instrucciones", style = MaterialTheme.typography.headlineSmall)
-                            Text(text = receta.instrucciones ?: "Sin instrucciones.", style = MaterialTheme.typography.bodyMedium)
+                            Text(text = receta.Instrucciones ?: "Sin instrucciones.", style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.height(16.dp))
                             Divider()
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(text = "Cultivos Necesarios", style = MaterialTheme.typography.headlineSmall)
                         }
-                        items(receta.cultivosNecesarios) { cultivo ->
-                            Text(text = "• ${cultivo.nombreCultivo}", style = MaterialTheme.typography.bodyMedium)
+                        items(receta.CultivosNecesarios) { cultivo ->
+                            Text(text = "• ${cultivo.NombreCultivo}", style = MaterialTheme.typography.bodyMedium)
                         }
                     }
                 }
