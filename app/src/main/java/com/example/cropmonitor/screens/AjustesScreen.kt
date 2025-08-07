@@ -1,6 +1,7 @@
 package com.example.cropmonitor.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -24,12 +25,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.cropmonitor.AppContainer
 import com.example.cropmonitor.data.models.ChangePasswordDto
 import com.example.cropmonitor.data.models.UsuarioProfileDto
-import com.example.cropmonitor.viewmodels.ModulosViewModelFactory
-import com.example.cropmonitor.R // Asegúrate de tener este R si usas recursos como el logo
+import com.example.cropmonitor.R
 import com.example.cropmonitor.ui.components.TopBar
 import com.example.cropmonitor.viewmodels.AjustesUiState
 import com.example.cropmonitor.viewmodels.AjustesViewModel
-import com.example.cropmonitor.viewmodels.CultivosViewModel
 import com.example.cropmonitor.viewmodels.DeleteAccountState
 import com.example.cropmonitor.viewmodels.PasswordChangeState
 
@@ -37,7 +36,8 @@ import com.example.cropmonitor.viewmodels.PasswordChangeState
 fun AjustesScreen(
     reloadKey: Int,
     appContainer: AppContainer,
-    onLogoutClick: () -> Unit
+    onLogoutClick: () -> Unit,
+    onNotificacionConfigClick: () -> Unit // Nuevo parámetro para la navegación a la configuración de notificaciones
 ) {
     // Se crea la fábrica de ViewModels para obtener el AjustesViewModel
     val viewModel: AjustesViewModel = viewModel(
@@ -54,8 +54,10 @@ fun AjustesScreen(
     Scaffold(
         topBar = {
             TopBar(
-                title = "Configuracion",
-                onLogoutClick = onLogoutClick
+                title = "Configuración",
+                onLogoutClick = onLogoutClick,
+                onNotificationsClick = onNotificacionConfigClick, // Added the missing parameter
+                unreadNotificationsCount = 0 // Added the missing parameter with a default value
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
@@ -77,7 +79,8 @@ fun AjustesScreen(
                     onLogoutClick = onLogoutClick,
                     viewModel = viewModel,
                     snackbarHostState = snackbarHostState,
-                    modifier = Modifier.padding(paddingValues)
+                    modifier = Modifier.padding(paddingValues),
+                    onNotificacionConfigClick = onNotificacionConfigClick // Pasamos el nuevo callback
                 )
             }
         }
@@ -90,7 +93,8 @@ fun AjustesContent(
     onLogoutClick: () -> Unit,
     viewModel: AjustesViewModel,
     snackbarHostState: SnackbarHostState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNotificacionConfigClick: () -> Unit // Nuevo parámetro para la navegación
 ) {
     // Estados para los campos de contraseña
     var currentPassword by remember { mutableStateOf("") }
@@ -167,6 +171,20 @@ fun AjustesContent(
             text = profile.correo,
             style = MaterialTheme.typography.bodyLarge,
             color = Color.Gray
+        )
+
+        Divider(modifier = Modifier.padding(vertical = 16.dp))
+
+        // --- Opción para Notificaciones (NUEVA FUNCIONALIDAD) ---
+        ListItem(
+            headlineContent = { Text("Configuración de notificaciones") },
+            leadingContent = {
+                Icon(
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = "Configuración de notificaciones"
+                )
+            },
+            modifier = Modifier.fillMaxWidth().clickable { onNotificacionConfigClick() }
         )
 
         Divider(modifier = Modifier.padding(vertical = 16.dp))

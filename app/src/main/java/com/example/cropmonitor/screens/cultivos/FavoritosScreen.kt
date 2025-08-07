@@ -40,7 +40,8 @@ fun FavoritosScreen(
     reloadKey: Int,
     appContainer: AppContainer,
     onCultivoClick: (Int) -> Unit,
-    onLogoutClick: () -> Unit
+    onLogoutClick: () -> Unit,
+    onNotificationsClick: () -> Unit // Nuevo parámetro para el clic de notificaciones
 ) {
     val viewModel: FavoritosViewModel = viewModel(
         factory = appContainer.modulosViewModelFactory
@@ -54,6 +55,9 @@ fun FavoritosScreen(
         topBar = {
             TopBar(
                 title = "Favoritos",
+                // Valores corregidos para TopBar
+                unreadNotificationsCount = 0, // Se puede obtener de un ViewModel si se implementa un contador
+                onNotificationsClick = onNotificationsClick,
                 onLogoutClick = onLogoutClick
             )
         }

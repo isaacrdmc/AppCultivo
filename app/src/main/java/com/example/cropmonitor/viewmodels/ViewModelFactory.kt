@@ -1,4 +1,3 @@
-// Archivo: com/example/cropmonitor/viewmodels/ModulosViewModelFactory.kt
 package com.example.cropmonitor.viewmodels
 
 import androidx.lifecycle.ViewModel
@@ -12,16 +11,20 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.cropmonitor.data.repository.UsuariosRepository
-import com.example.cropmonitor.viewmodels.AjustesViewModel
-import com.example.cropmonitor.viewmodels.CultivoDetailViewModel
-import com.example.cropmonitor.viewmodels.CultivosViewModel
+
+// NOTIFICATIONS REFACTOR
+import com.example.cropmonitor.data.repository.NotificacionesRepository
+// FIN NOTIFICATIONS REFACTOR
 
 class ModulosViewModelFactory(
     private val modulosRepository: ModulosRepository,
     private val authService: AuthApiService,
     private val tokenManager: TokenManager,
     private val cultivosRepository: CultivosRepository,
-    private val usuariosRepository: UsuariosRepository
+    private val usuariosRepository: UsuariosRepository,
+    // NOTIFICATIONS REFACTOR: Añadimos el repositorio de notificaciones
+    private val notificacionesRepository: NotificacionesRepository
+    // FIN NOTIFICATIONS REFACTOR
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
@@ -64,6 +67,12 @@ class ModulosViewModelFactory(
             @Suppress("UNCHECKED_CAST")
             return AjustesViewModel(usuariosRepository) as T
         }
+        // NOTIFICATIONS REFACTOR: Agregamos el nuevo NotificacionesViewModel
+        if (modelClass.isAssignableFrom(NotificacionesViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return NotificacionesViewModel(notificacionesRepository) as T
+        }
+        // FIN NOTIFICATIONS REFACTOR
         throw IllegalArgumentException("ViewModel desconocido")
     }
 }

@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,9 +19,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cropmonitor.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
     title: String,
+    unreadNotificationsCount: Int, // Agregamos el contador
+    onNotificationsClick: () -> Unit, // Agregamos el evento de clic
     onLogoutClick: () -> Unit
 ) {
     Row(
@@ -35,13 +36,23 @@ fun TopBar(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        IconButton(onClick = { /* Acción al hacer clic en Notificaciones */ }) {
-            Icon(
-                imageVector = Icons.Default.Notifications,
-                contentDescription = "Notificaciones",
-                tint = Color.Black,
-                modifier = Modifier.size(32.dp)
-            )
+        BadgedBox(
+            badge = {
+                if (unreadNotificationsCount > 0) {
+                    Badge {
+                        Text(text = unreadNotificationsCount.toString())
+                    }
+                }
+            }
+        ) {
+            IconButton(onClick = onNotificationsClick) {
+                Icon(
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = "Notificaciones",
+                    tint = Color.Black,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
         Text(
             text = title,

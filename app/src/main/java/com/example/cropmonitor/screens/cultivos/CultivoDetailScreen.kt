@@ -15,15 +15,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.cropmonitor.AppContainer
-import com.example.cropmonitor.auth.TokenManager
 import com.example.cropmonitor.data.models.CultivoDetailDto
 import com.example.cropmonitor.ui.components.TopBar
 import com.example.cropmonitor.viewmodels.CultivoDetailUiState
 import com.example.cropmonitor.viewmodels.CultivoDetailViewModel
-import com.example.cropmonitor.viewmodels.CultivosViewModel
 import com.example.cropmonitor.viewmodels.ModulosViewModelFactory
 
-private const val BASE_URL = "https://10.0.2.2:7016/"
+// Esta constante ya no es necesaria, ya que las URLs de las imágenes son completas.
+// private const val BASE_URL = "http://10.0.2.2:7016"
 
 @Composable
 fun CultivoDetailScreen(
@@ -86,7 +85,9 @@ fun CultivoDetailContent(cultivo: CultivoDetailDto, modifier: Modifier = Modifie
         Spacer(modifier = Modifier.height(16.dp))
 
         // Imagen del cultivo
-        val imageUrl = if (cultivo.imagenURL != null) BASE_URL + cultivo.imagenURL.removePrefix("/") else ""
+        // Simplemente usa la URL directamente, ya que es completa.
+        val imageUrl = cultivo.imagenURL ?: ""
+
         AsyncImage(
             model = imageUrl,
             contentDescription = "Imagen de ${cultivo.nombre}",

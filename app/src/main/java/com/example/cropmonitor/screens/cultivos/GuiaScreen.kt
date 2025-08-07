@@ -29,14 +29,15 @@ import com.example.cropmonitor.viewmodels.CultivosViewModel
 import com.example.cropmonitor.viewmodels.ModulosViewModelFactory
 
 
-private const val BASE_URL = "https://10.0.2.2:7016/"
+// private const val BASE_URL = "https://10.0.2.2:7016/" // Elimina esta línea
 
 @Composable
 fun GuiaScreen(
     reloadKey: Int,
     appContainer: AppContainer,
     onCultivoClick: (Int) -> Unit,
-    onLogoutClick: () -> Unit
+    onLogoutClick: () -> Unit,
+    onNotificationsClick: () -> Unit // Parámetro añadido
 ) {
     val cultivosViewModel: CultivosViewModel = viewModel(
         factory = appContainer.modulosViewModelFactory
@@ -56,6 +57,8 @@ fun GuiaScreen(
         topBar = {
             TopBar(
                 title = "Guía",
+                unreadNotificationsCount = 0, // Valor por defecto
+                onNotificationsClick = onNotificationsClick, // Parámetro pasado
                 onLogoutClick = onLogoutClick
             )
         },
@@ -132,7 +135,7 @@ fun GuiaScreen(
     }
 }
 
-// ... Los composables auxiliares (FiltroTemporadas, SearchBar, CultivoCard) son los mismos que en el ejemplo anterior.
+// ... Los composables auxiliares son los mismos
 @Composable
 fun FiltroTemporadas(
     selectedTemporadaId: Int?,
@@ -143,7 +146,6 @@ fun FiltroTemporadas(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        // Opción para ver todos los cultivos
         item {
             FilterChip(
                 selected = selectedTemporadaId == null,
@@ -186,11 +188,11 @@ fun SearchBar(
 fun CultivoCard(cultivo: CultivoListDto, onCultivoClick: () -> Unit, onToggleFavorito: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-        onClick = onCultivoClick // El clic en la tarjeta navega al detalle
+        onClick = onCultivoClick
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             // Cargar la imagen del cultivo
-            val imageUrl = if (cultivo.imagenURL != null) BASE_URL + cultivo.imagenURL.removePrefix("/") else ""
+            val imageUrl = cultivo.imagenURL ?: ""
             AsyncImage(
                 model = imageUrl,
                 contentDescription = "Imagen de ${cultivo.nombre}",

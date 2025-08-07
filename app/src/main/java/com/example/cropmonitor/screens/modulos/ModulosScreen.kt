@@ -22,6 +22,7 @@ fun ModulosScreen(
     reloadKey: Int,
     onModuloClick: (Int) -> Unit,
     onLogoutClick: () -> Unit,
+    onNotificationsClick: () -> Unit, // Parámetro añadido
     appContainer: AppContainer
 ) {
     val viewModel: ModulosViewModel = viewModel(factory = appContainer.modulosViewModelFactory)
@@ -36,6 +37,8 @@ fun ModulosScreen(
         topBar = {
             TopBar(
                 title = "Módulos",
+                unreadNotificationsCount = 0, // Valor por defecto
+                onNotificationsClick = onNotificationsClick, // Parámetro pasado
                 onLogoutClick = onLogoutClick
             )
         },

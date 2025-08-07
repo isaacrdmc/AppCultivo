@@ -20,7 +20,8 @@ fun RecetasScreen(
     reloadKey: Int,
     appContainer: AppContainer,
     onRecetaClick: (Int) -> Unit,
-    onLogoutClick: () -> Unit
+    onLogoutClick: () -> Unit,
+    onNotificationsClick: () -> Unit // Parámetro añadido
 ) {
     val viewModel: RecetasViewModel = viewModel(factory = appContainer.recetasViewModelFactory)
     val uiState by viewModel.recetasUiState.collectAsState()
@@ -32,6 +33,8 @@ fun RecetasScreen(
         topBar = {
             TopBar(
                 title = "Recetas de Cultivos",
+                unreadNotificationsCount = 0, // Valor por defecto
+                onNotificationsClick = onNotificationsClick, // Parámetro pasado
                 onLogoutClick = onLogoutClick
             )
         }

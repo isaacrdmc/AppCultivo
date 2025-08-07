@@ -23,7 +23,9 @@ import com.example.cropmonitor.viewmodels.SlotDetailViewModel
 fun SensorDetailScreen(
     moduloId: Int,
     medidorSlotIndex: Int,
-    appContainer: AppContainer
+    appContainer: AppContainer,
+    onBackClick: () -> Unit, // Parámetro añadido para el botón de retroceso
+    onNotificationsClick: () -> Unit // Parámetro añadido
 ) {
     val viewModel: SlotDetailViewModel = viewModel(factory = appContainer.modulosViewModelFactory)
     val uiState by viewModel.uiState.collectAsState()
@@ -36,7 +38,9 @@ fun SensorDetailScreen(
         topBar = {
             TopBar(
                 title = "Slot $medidorSlotIndex",
-                onLogoutClick = { /* No hay acción de logout aquí */ }
+                unreadNotificationsCount = 0, // Valor por defecto
+                onNotificationsClick = onNotificationsClick, // Parámetro pasado
+                onLogoutClick = { onBackClick() } // Usamos onBackClick para el botón de logout
             )
         }
     ) { padding ->

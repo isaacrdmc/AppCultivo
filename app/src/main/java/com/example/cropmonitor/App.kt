@@ -1,3 +1,4 @@
+// AppContainer.kt
 package com.example.cropmonitor
 
 import android.app.Application
@@ -9,7 +10,7 @@ import com.example.cropmonitor.data.repository.CultivosRepository
 import com.example.cropmonitor.data.api.ModulosApiService
 import com.example.cropmonitor.data.repository.ModulosRepository
 import com.example.cropmonitor.data.repository.UsuariosRepository
-import com.example.cropmonitor.data.api.UsuariosApiService // <-- Nueva importación
+import com.example.cropmonitor.data.api.UsuariosApiService
 import com.example.cropmonitor.network.AuthApiService
 import com.example.cropmonitor.viewmodels.ModulosViewModelFactory
 import okhttp3.OkHttpClient
@@ -24,7 +25,13 @@ import javax.net.ssl.X509TrustManager
 import com.example.cropmonitor.data.repository.NetworkRecetasRepository
 import com.example.cropmonitor.data.repository.RecetasRepository
 import com.example.cropmonitor.data.api.RecetasApiService
+
+// NOTIFICATIONS REFACTOR
+import com.example.cropmonitor.data.api.NotificacionesApiService
+import com.example.cropmonitor.data.repository.NotificacionesRepository
 import com.example.cropmonitor.viewmodels.RecetasViewModelFactory
+
+// FIN NOTIFICATIONS REFACTOR
 
 /**
  * Interfaz que define el contenedor de dependencias de la aplicación.
@@ -39,11 +46,16 @@ interface AppContainer {
     val cultivosApiService: CultivosApiService
     val cultivosRepository: CultivosRepository
 
-    val usuariosApiService: UsuariosApiService // <-- Nuevo servicio
-    val usuariosRepository: UsuariosRepository // <-- Nuevo repositorio
+    val usuariosApiService: UsuariosApiService
+    val usuariosRepository: UsuariosRepository
 
     val recetasRepository: RecetasRepository
     val recetasViewModelFactory: RecetasViewModelFactory
+
+    // NOTIFICATIONS REFACTOR: Nuevas dependencias para notificaciones
+    val notificacionesApiService: NotificacionesApiService
+    val notificacionesRepository: NotificacionesRepository
+    // FIN NOTIFICATIONS REFACTOR
 }
 
 
@@ -136,7 +148,8 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
             authService = authApiService,
             tokenManager = TokenManager(context),
             cultivosRepository = cultivosRepository,
-            usuariosRepository = usuariosRepository // <-- Ahora esta dependencia ya está disponible
+            usuariosRepository = usuariosRepository,
+            notificacionesRepository = notificacionesRepository // NOTIFICATIONS REFACTOR: Agregamos el nuevo repositorio
         )
     }
 
@@ -153,6 +166,16 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     override val recetasViewModelFactory: RecetasViewModelFactory by lazy {
         RecetasViewModelFactory(recetasRepository)
     }
+
+    // NOTIFICATIONS REFACTOR: Implementación del servicio y repositorio de notificaciones
+    override val notificacionesApiService: NotificacionesApiService by lazy {
+        retrofit.create(NotificacionesApiService::class.java)
+    }
+
+    override val notificacionesRepository: NotificacionesRepository by lazy {
+        NotificacionesRepository(notificacionesApiService)
+    }
+    // FIN NOTIFICATIONS REFACTOR
 }
 
 /**

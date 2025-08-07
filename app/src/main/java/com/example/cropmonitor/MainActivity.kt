@@ -24,8 +24,6 @@ import com.example.cropmonitor.auth.TokenManager
 import com.example.cropmonitor.screens.cultivos.CultivoDetailScreen
 import com.example.cropmonitor.screens.cultivos.GuiaScreen
 import com.example.cropmonitor.screens.AjustesScreen
-import com.example.cropmonitor.screens.EstadisticasScreen
-import com.example.cropmonitor.screens.MasCosasScreen
 import com.example.cropmonitor.screens.modulos.ModulosScreen
 import com.example.cropmonitor.ui.components.BottomNavBar
 import com.example.cropmonitor.ui.components.Screen
@@ -33,14 +31,19 @@ import com.example.cropmonitor.ui.theme.CropMonitorTheme
 import com.example.cropmonitor.screens.modulos.SensoresScreen
 import com.example.cropmonitor.screens.modulos.SensorDetailScreen
 import androidx.navigation.NavType
+import com.example.cropmonitor.screens.cultivos.FavoritosScreen
+import com.example.cropmonitor.screens.notificaciones.NotificacionConfiguracionScreen
+import com.example.cropmonitor.screens.notificaciones.NotificacionesScreen
 import com.example.cropmonitor.screens.recetas.RecetaDetailScreen
 import com.example.cropmonitor.screens.recetas.RecetasScreen
-import com.example.cropmonitor.screens.cultivos.FavoritosScreen
+import android.os.Build
+import androidx.annotation.RequiresApi
 
 class MainActivity : ComponentActivity() {
 
     private val appContainer by lazy { (application as App).container }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -112,6 +115,7 @@ class MainActivity : ComponentActivity() {
                                                     popUpTo("main_app") { inclusive = true }
                                                 }
                                             },
+                                            onNotificationsClick = { mainNavController.navigate("notificaciones") },
                                             appContainer = appContainer
                                         )
                                     }
@@ -129,7 +133,8 @@ class MainActivity : ComponentActivity() {
                                                 navController.navigate("acceso") {
                                                     popUpTo("main_app") { inclusive = true }
                                                 }
-                                            }
+                                            },
+                                            onNotificationsClick = { mainNavController.navigate("notificaciones") }
                                         )
                                     }
 
@@ -159,7 +164,8 @@ class MainActivity : ComponentActivity() {
                                                 navController.navigate("acceso") {
                                                     popUpTo("main_app") { inclusive = true }
                                                 }
-                                            }
+                                            },
+                                            onNotificationsClick = { mainNavController.navigate("notificaciones") } // Parámetro añadido
                                         )
                                     }
                                     // Agrega la composable para la lista de recetas
@@ -175,7 +181,8 @@ class MainActivity : ComponentActivity() {
                                                 navController.navigate("acceso") {
                                                     popUpTo("main_app") { inclusive = true }
                                                 }
-                                            }
+                                            },
+                                            onNotificationsClick = { mainNavController.navigate("notificaciones") }
                                         )
                                     }
                                     composable(
@@ -189,19 +196,38 @@ class MainActivity : ComponentActivity() {
                                                 recetaId = recetaId,
                                                 onBackClick = {
                                                     mainNavController.popBackStack()
-                                                }
+                                                },
+                                                onNotificationsClick = { mainNavController.navigate("notificaciones") }
                                             )
                                         }
+                                    }
+                                    // NUEVA RUTA PARA LA PANTALLA DE NOTIFICACIONES
+                                    composable("notificaciones") {
+                                        NotificacionesScreen(
+                                            appContainer = appContainer,
+                                            onBackClick = { mainNavController.popBackStack() },
+                                            onConfiguracionClick = { mainNavController.navigate("notificaciones_configuracion") }
+                                        )
                                     }
                                     composable(Screen.Ajustes.route) {
                                         AjustesScreen(
                                             reloadKey = reloadKey,
-                                            appContainer = appContainer, // <-- Pasamos el contenedor
+                                            appContainer = appContainer,
                                             onLogoutClick = {
                                                 tokenManager.clearToken()
                                                 navController.navigate("acceso") {
                                                     popUpTo("main_app") { inclusive = true }
                                                 }
+                                            },
+                                            onNotificacionConfigClick = { mainNavController.navigate("notificaciones_configuracion") }
+                                        )
+                                    }
+                                    // Agregamos la nueva ruta para la configuración de notificaciones
+                                    composable("notificaciones_configuracion") {
+                                        NotificacionConfiguracionScreen(
+                                            appContainer = appContainer,
+                                            onBackClick = {
+                                                mainNavController.popBackStack()
                                             }
                                         )
                                     }
@@ -213,7 +239,8 @@ class MainActivity : ComponentActivity() {
                                                 onCultivoSlotClick = { medidorSlotIndex ->
                                                     mainNavController.navigate("cultivoSlot/${moduloId}/${medidorSlotIndex}")
                                                 },
-                                                appContainer = appContainer
+                                                appContainer = appContainer,
+                                                onNotificationsClick = { mainNavController.navigate("notificaciones") }
                                             )
                                         }
                                     }
@@ -225,7 +252,9 @@ class MainActivity : ComponentActivity() {
                                             SensorDetailScreen(
                                                 moduloId = moduloId,
                                                 medidorSlotIndex = medidorSlotIndex,
-                                                appContainer = appContainer
+                                                appContainer = appContainer,
+                                                onNotificationsClick = { mainNavController.navigate("notificaciones") },
+                                                onBackClick = { mainNavController.popBackStack() }
                                             )
                                         }
                                     }

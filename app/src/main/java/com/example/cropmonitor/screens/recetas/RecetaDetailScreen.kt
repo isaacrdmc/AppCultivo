@@ -18,7 +18,8 @@ import com.example.cropmonitor.viewmodels.RecetasViewModel
 fun RecetaDetailScreen(
     appContainer: AppContainer,
     recetaId: Int,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onNotificationsClick: () -> Unit // Parámetro añadido
 ) {
     val viewModel: RecetasViewModel = viewModel(factory = appContainer.recetasViewModelFactory)
     val uiState by viewModel.recetaDetailUiState.collectAsState()
@@ -31,7 +32,9 @@ fun RecetaDetailScreen(
         topBar = {
             TopBar(
                 title = "Detalle de Receta",
-                onLogoutClick = { /* No hay acción de logout aquí */ }
+                unreadNotificationsCount = 0, // Valor por defecto
+                onNotificationsClick = onNotificationsClick, // Parámetro pasado
+                onLogoutClick = onBackClick // Usamos onBackClick para el botón de logout
             )
         }
     ) { padding ->

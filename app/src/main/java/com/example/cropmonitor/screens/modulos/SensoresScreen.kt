@@ -19,6 +19,7 @@ import com.example.cropmonitor.ui.components.TopBar
 fun SensoresScreen(
     moduloId: Int,
     onCultivoSlotClick: (medidorSlotIndex: Int) -> Unit, // <-- Usamos solo esta lambda
+    onNotificationsClick: () -> Unit, // Parámetro añadido
     appContainer: AppContainer
 ) {
     val viewModel: SensoresViewModel = viewModel(factory = appContainer.modulosViewModelFactory)
@@ -34,6 +35,8 @@ fun SensoresScreen(
         topBar = {
             TopBar(
                 title = "Sensores del Módulo",
+                unreadNotificationsCount = 0, // Valor por defecto
+                onNotificationsClick = onNotificationsClick, // Parámetro pasado
                 onLogoutClick = { /* No se implementa aquí */ }
             )
         }
